@@ -33,4 +33,5 @@ public class GameController : MonoBehaviour
             Debug.Log("wa----------i");
         }
     }
+
 }
