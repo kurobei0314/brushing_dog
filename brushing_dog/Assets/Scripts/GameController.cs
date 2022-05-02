@@ -13,6 +13,7 @@ public class GameController : MonoBehaviour
     }
 
     GameState currentGameState;
+    Vector3 pastPosition = GameInfo.DEFAULT_POSITION;
 
     [SerializeField]
     private Camera camera;
@@ -33,10 +34,32 @@ public class GameController : MonoBehaviour
     void PlayerControll(){
 
         Vector3 currentPosition;
+        // クリック(タップ)した瞬間に初期化させる
         if(Input.GetMouseButtonDown(0)){
             currentPosition = camera.ViewportToWorldPoint(Input.mousePosition);
-            Debug.Log("x: " + currentPosition.x);
-            Debug.Log("y: " + currentPosition.y);
+            pastPosition = currentPosition;
+        }
+
+        // クリック(タップ)している間の処理
+        if(Input.GetMouseButton(0)){
+
+            currentPosition = camera.ViewportToWorldPoint(Input.mousePosition);
+
+            // スワイプした距離が一定の距離以下の場合、無視する
+            if(Vector3.Distance(currentPosition, pastPosition) < GameInfo.SWAP_DISTANCE){
+                pastPosition = currentPosition;
+                return;
+            }
+
+            // TODO：スワイプした時の処理を書く
+            // スコアに反映、毛を発生させるとか？
+
+            pastPosition = currentPosition;
+        }
+
+        // ボタン(指)を離した瞬間、処理を終了させる
+        if(Input.GetMouseButtonUp(0)){
+            pastPosition = GameInfo.DEFAULT_POSITION;
         }
     }
 
