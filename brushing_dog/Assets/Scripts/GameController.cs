@@ -11,8 +11,11 @@ public class GameController : MonoBehaviour
         MAIN,
         GAMEOVER
     }
+
     GameState currentGameState;
 
+    [SerializeField]
+    private Camera camera;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,8 +32,11 @@ public class GameController : MonoBehaviour
 
     void PlayerControll(){
 
+        Vector3 currentPosition;
         if(Input.GetMouseButtonDown(0)){
-            Debug.Log("wa----------i");
+            currentPosition = camera.ViewportToWorldPoint(Input.mousePosition);
+            Debug.Log("x: " + currentPosition.x);
+            Debug.Log("y: " + currentPosition.y);
         }
     }
 
