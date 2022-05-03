@@ -21,6 +21,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         currentGameState = GameState.MAIN;
+        ScoreManager.instance.score = 0.0f;
     }
 
     // Update is called once per frame
@@ -44,6 +45,7 @@ public class GameController : MonoBehaviour
         if(Input.GetMouseButton(0)){
 
             currentPosition = camera.ViewportToWorldPoint(Input.mousePosition);
+
             // マウスポインタが犬に触れていないときは無視する
             if(!(CheckTouchDog(currentPosition))){
                 pastPosition = currentPosition;
@@ -56,7 +58,9 @@ public class GameController : MonoBehaviour
             }
 
             // TODO：スワイプした時の処理を書く
-            // スコアに反映、毛を発生させるとか？
+            // 毛を発生させるとか？
+            ScoreManager.instance.score += Vector3.Distance(currentPosition, pastPosition);
+            Debug.Log("score: "+ ScoreManager.instance.score);
 
             pastPosition = currentPosition;
         }
