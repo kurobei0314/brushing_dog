@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -17,6 +18,13 @@ public class GameController : MonoBehaviour
 
     [SerializeField]
     private Camera camera;
+
+    [SerializeField]
+    float GameTimes;
+
+    [SerializeField]
+    Text timeText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +37,7 @@ public class GameController : MonoBehaviour
     {
         if(currentGameState == GameState.MAIN){
             PlayerControll();
+            GameTimeCounter();
         }        
     }
 
@@ -84,5 +93,33 @@ public class GameController : MonoBehaviour
         // タグが犬かどうかを判別する
         if (targetObject.tag == "dog") return true;
         else return false;
+    }
+
+    void GameTimeCounter(){
+
+        //時間をカウントする
+        GameTimes = TimeCounter(GameTimes);
+
+        //時間を表示する
+        timeText.text = ((int)GameTimes).ToString();
+
+        //3秒前の音
+        if( 0 < GameTimes && GameTimes < 4){
+            if ((int)GameTimes <= 3 && 3 < (int)GameTimes+1){
+                // AudioManager.Instance.PlaySE("Count");
+            }
+        }
+
+        if(GameTimes < 0) SetCurrentGameState(GameState.GAMEOVER);
+    }
+
+    void SetCurrentGameState(GameState status){
+        currentGameState = status;
+    }
+
+    float TimeCounter(float time){
+
+        time -= Time.deltaTime;
+        return time;
     }
 }
