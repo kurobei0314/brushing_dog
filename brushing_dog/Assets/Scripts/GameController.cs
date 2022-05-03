@@ -44,7 +44,11 @@ public class GameController : MonoBehaviour
         if(Input.GetMouseButton(0)){
 
             currentPosition = camera.ViewportToWorldPoint(Input.mousePosition);
-
+            // マウスポインタが犬に触れていないときは無視する
+            if(!(CheckTouchDog(currentPosition))){
+                pastPosition = currentPosition;
+                return;
+            } 
             // スワイプした距離が一定の距離以下の場合、無視する
             if(Vector3.Distance(currentPosition, pastPosition) < GameInfo.SWAP_DISTANCE){
                 pastPosition = currentPosition;
@@ -63,4 +67,18 @@ public class GameController : MonoBehaviour
         }
     }
 
+    // 今のマウスポインタが犬に触れているかを確認する
+    bool CheckTouchDog(Vector3 mouse_position){
+        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        float maxDistance = 10;
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, maxDistance, Physics.AllLayers);
+
+        // 直線でぶつかっているものがなかったら犬に触れていない
+        if (hit.collider == null) return false; 
+        GameObject targetObject = hit.collider.gameObject;
+
+        // タグが犬かどうかを判別する
+        if (targetObject.tag == "dog") return true;
+        else return false;
+    }
 }
