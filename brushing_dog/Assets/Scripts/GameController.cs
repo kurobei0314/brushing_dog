@@ -53,25 +53,30 @@ public class GameController : MonoBehaviour
         // クリック(タップ)している間の処理
         if(Input.GetMouseButton(0)){
 
-            currentPosition = camera.ViewportToWorldPoint(Input.mousePosition);
+            currentPosition = Input.mousePosition;
 
             // マウスポインタが犬に触れていないときは無視する
             if(!(CheckTouchDog(currentPosition))){
-                pastPosition = currentPosition;
+                pastPosition = camera.ViewportToWorldPoint(currentPosition);
                 return;
             } 
             // スワイプした距離が一定の距離以下の場合、無視する
             if(Vector3.Distance(currentPosition, pastPosition) < GameInfo.SWAP_DISTANCE){
-                pastPosition = currentPosition;
+                pastPosition = camera.ViewportToWorldPoint(currentPosition);
                 return;
             }
 
             // TODO：スワイプした時の処理を書く
             // 毛を発生させるとか？
-            ScoreManager.instance.score += Vector3.Distance(currentPosition, pastPosition);
+            ScoreManager.instance.score += (Vector3.Distance(currentPosition, pastPosition)/100.0f);
+
+            // // 一定のスコアごとに抜け毛を発生させる
+            // if(ScoreManager.instance.score % 10 == 0){
+
+            // }
             Debug.Log("score: "+ ScoreManager.instance.score);
 
-            pastPosition = currentPosition;
+            pastPosition = camera.ViewportToWorldPoint(currentPosition);
         }
 
         // ボタン(指)を離した瞬間、処理を終了させる
@@ -82,7 +87,7 @@ public class GameController : MonoBehaviour
 
     // 今のマウスポインタが犬に触れているかを確認する
     bool CheckTouchDog(Vector3 mouse_position){
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = camera.ScreenPointToRay(mouse_position);
         float maxDistance = 10;
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, maxDistance, Physics.AllLayers);
 
@@ -121,5 +126,9 @@ public class GameController : MonoBehaviour
 
         time -= Time.deltaTime;
         return time;
+    }
+
+    void MakeHair(){
+
     }
 }
