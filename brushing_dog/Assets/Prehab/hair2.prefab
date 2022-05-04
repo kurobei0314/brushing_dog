@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6098404493800028237}
   - component: {fileID: 5553363474613400930}
+  - component: {fileID: 8238539670729850797}
   m_Layer: 0
   m_Name: hair2
   m_TagString: Untagged
@@ -82,3 +83,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8238539670729850797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2511956035679150867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6137f37904a834d8a9e5af1f029f3366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bottom: {fileID: 7107830348706553699, guid: ce573e3e5a67048da8a9225478362f6c, type: 3}

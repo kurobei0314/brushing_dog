@@ -25,10 +25,13 @@ public class GameController : MonoBehaviour
     [SerializeField]
     Text timeText;
 
+    [SerializeField]
+    GameObject[] hair;
+
     // Start is called before the first frame update
     void Start()
     {
-        currentGameState = GameState.MAIN;
+        SetCurrentGameState(GameState.MAIN);
         ScoreManager.instance.score = 0.0f;
     }
 
@@ -70,10 +73,10 @@ public class GameController : MonoBehaviour
             // 毛を発生させるとか？
             ScoreManager.instance.score += (Vector3.Distance(currentPosition, pastPosition)/100.0f);
 
-            // // 一定のスコアごとに抜け毛を発生させる
-            // if(ScoreManager.instance.score % 10 == 0){
-
-            // }
+            // 一定のスコアごとに抜け毛を発生させる
+            if((int)ScoreManager.instance.score % 10 == 0){
+                MakeHair(currentPosition);
+            }
             Debug.Log("score: "+ ScoreManager.instance.score);
 
             pastPosition = camera.ViewportToWorldPoint(currentPosition);
@@ -123,12 +126,19 @@ public class GameController : MonoBehaviour
     }
 
     float TimeCounter(float time){
-
         time -= Time.deltaTime;
         return time;
     }
 
-    void MakeHair(){
+    void MakeHair(Vector3 mouse_position){
 
+        if(Random.Range (0.0f, 1.0f) < 0.5f){
+            GameObject tmp = Instantiate(hair[0], camera.ScreenToWorldPoint(mouse_position), Quaternion.identity);
+            tmp.transform.Rotate(new Vector3 (0.0f,0.0f,Random.Range (0.0f, 360.0f)));
+        }
+        else{
+            GameObject tmp = Instantiate(hair[1], camera.ScreenToWorldPoint(mouse_position), Quaternion.identity);
+            tmp.transform.Rotate(new Vector3 (0.0f,0.0f,Random.Range (0.0f, 360.0f)));
+        }
     }
 }
