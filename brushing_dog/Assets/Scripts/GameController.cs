@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class GameController : MonoBehaviour
 {
@@ -28,6 +29,9 @@ public class GameController : MonoBehaviour
     [SerializeField]
     GameObject[] hair;
 
+    [SerializeField]
+    GameObject result_background;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,6 +45,9 @@ public class GameController : MonoBehaviour
         if(currentGameState == GameState.MAIN){
             PlayerControll();
             GameTimeCounter();
+        }
+        else if (currentGameState == GameState.GAMEOVER){
+            ResultControll();
         }        
     }
 
@@ -141,4 +148,20 @@ public class GameController : MonoBehaviour
             tmp.transform.Rotate(new Vector3 (0.0f,0.0f,Random.Range (0.0f, 360.0f)));
         }
     }
+
+    void ResultControll(){
+
+        StartCoroutine("ResultAnimation");
+    }
+
+    private IEnumerator ResultAnimation() {
+
+        result_background.transform.DOMove (
+            new Vector3(0.0f, 0.0f, 1.0f), //移動後の座標
+            1.0f         //時間
+        );
+        
+        yield return new WaitForSeconds (1.0f);
+    }
+
 }

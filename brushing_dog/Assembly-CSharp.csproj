@@ -267,6 +267,9 @@
     <Reference Include="Newtonsoft.Json">
         <HintPath>/Users/uchidamai/unity/brushing_dog/brushing_dog/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="DOTween">
+        <HintPath>/Users/uchidamai/unity/brushing_dog/brushing_dog/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
+    </Reference>
     <Reference Include="netstandard">
         <HintPath>/Applications/Unity/Hub/Editor/2020.3.28f1/Unity.app/Contents/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
     </Reference>
@@ -704,6 +707,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{78b480af-457a-e796-236b-f6cfdaa309ff}</Project>
+      <Name>Assembly-CSharp-firstpass</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
