@@ -25,10 +25,13 @@ public class GameController : MonoBehaviour
     [SerializeField]
     Text timeText;
 
+    [SerializeField]
+    GameObject[] hair;
+
     // Start is called before the first frame update
     void Start()
     {
-        currentGameState = GameState.MAIN;
+        SetCurrentGameState(GameState.MAIN);
         ScoreManager.instance.score = 0.0f;
     }
 
@@ -53,25 +56,30 @@ public class GameController : MonoBehaviour
         // クリック(タップ)している間の処理
         if(Input.GetMouseButton(0)){
 
-            currentPosition = camera.ViewportToWorldPoint(Input.mousePosition);
+            currentPosition = Input.mousePosition;
 
             // マウスポインタが犬に触れていないときは無視する
             if(!(CheckTouchDog(currentPosition))){
-                pastPosition = currentPosition;
+                pastPosition = camera.ViewportToWorldPoint(currentPosition);
                 return;
             } 
             // スワイプした距離が一定の距離以下の場合、無視する
             if(Vector3.Distance(currentPosition, pastPosition) < GameInfo.SWAP_DISTANCE){
-                pastPosition = currentPosition;
+                pastPosition = camera.ViewportToWorldPoint(currentPosition);
                 return;
             }
 
             // TODO：スワイプした時の処理を書く
             // 毛を発生させるとか？
-            ScoreManager.instance.score += Vector3.Distance(currentPosition, pastPosition);
+            ScoreManager.instance.score += (Vector3.Distance(currentPosition, pastPosition)/100.0f);
+
+            // 一定のスコアごとに抜け毛を発生させる
+            if((int)ScoreManager.instance.score % 10 == 0){
+                MakeHair(currentPosition);
+            }
             Debug.Log("score: "+ ScoreManager.instance.score);
 
-            pastPosition = currentPosition;
+            pastPosition = camera.ViewportToWorldPoint(currentPosition);
         }
 
         // ボタン(指)を離した瞬間、処理を終了させる
@@ -82,7 +90,7 @@ public class GameController : MonoBehaviour
 
     // 今のマウスポインタが犬に触れているかを確認する
     bool CheckTouchDog(Vector3 mouse_position){
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = camera.ScreenPointToRay(mouse_position);
         float maxDistance = 10;
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, maxDistance, Physics.AllLayers);
 
@@ -118,8 +126,19 @@ public class GameController : MonoBehaviour
     }
 
     float TimeCounter(float time){
-
         time -= Time.deltaTime;
         return time;
+    }
+
+    void MakeHair(Vector3 mouse_position){
+
+        if(Random.Range (0.0f, 1.0f) < 0.5f){
+            GameObject tmp = Instantiate(hair[0], camera.ScreenToWorldPoint(mouse_position), Quaternion.identity);
+            tmp.transform.Rotate(new Vector3 (0.0f,0.0f,Random.Range (0.0f, 360.0f)));
+        }
+        else{
+            GameObject tmp = Instantiate(hair[1], camera.ScreenToWorldPoint(mouse_position), Quaternion.identity);
+            tmp.transform.Rotate(new Vector3 (0.0f,0.0f,Random.Range (0.0f, 360.0f)));
+        }
     }
 }
