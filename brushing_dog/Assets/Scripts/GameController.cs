@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class GameController : MonoBehaviour
 {
@@ -28,11 +29,18 @@ public class GameController : MonoBehaviour
     [SerializeField]
     GameObject[] hair;
 
+    [SerializeField]
+    GameObject result_background;
+
+    [SerializeField]
+    GameObject ResultText;
+
     // Start is called before the first frame update
     void Start()
     {
         SetCurrentGameState(GameState.MAIN);
         ScoreManager.instance.score = 0.0f;
+        ResultText.SetActive(false);
     }
 
     // Update is called once per frame
@@ -41,6 +49,9 @@ public class GameController : MonoBehaviour
         if(currentGameState == GameState.MAIN){
             PlayerControll();
             GameTimeCounter();
+        }
+        else if (currentGameState == GameState.GAMEOVER){
+            ResultControll();
         }        
     }
 
@@ -71,7 +82,7 @@ public class GameController : MonoBehaviour
 
             // TODO：スワイプした時の処理を書く
             // 毛を発生させるとか？
-            ScoreManager.instance.score += (Vector3.Distance(currentPosition, pastPosition)/100.0f);
+            ScoreManager.instance.score = (Vector3.Distance(currentPosition, pastPosition)/100.0f);
 
             // 一定のスコアごとに抜け毛を発生させる
             if((int)ScoreManager.instance.score % 10 == 0){
@@ -140,5 +151,22 @@ public class GameController : MonoBehaviour
             GameObject tmp = Instantiate(hair[1], camera.ScreenToWorldPoint(mouse_position), Quaternion.identity);
             tmp.transform.Rotate(new Vector3 (0.0f,0.0f,Random.Range (0.0f, 360.0f)));
         }
+    }
+
+    void ResultControll(){
+
+        StartCoroutine("ResultAnimation");
+    }
+
+    private IEnumerator ResultAnimation() {
+
+        result_background.transform.DOMove (
+            new Vector3(0.0f, 0.0f, 1.0f), //移動後の座標
+            0.5f         //時間
+        );
+        yield return new WaitForSeconds (0.6f);
+        Text TextContent = ResultText.GetComponent<Text>();
+        TextContent.text = (int)ScoreManager.instance.score + "mg \n取れました";
+        ResultText.SetActive(true);
     }
 }
