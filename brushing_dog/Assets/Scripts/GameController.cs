@@ -10,7 +10,6 @@ public class GameController : MonoBehaviour
 
      //ゲームの状態を管理する
     public enum GameState{
-        START,
         COUNTDOWN,
         MAIN,
         GAMEOVER
@@ -84,9 +83,6 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if (currentGameState == GameState.START){
-        //     SetCurrentGameState(GameState.COUNTDOWN);
-        // }
         if(currentGameState == GameState.COUNTDOWN){
             AudioManager.Instance.PlayBGM("Main");
             StartGameCounter();
@@ -134,8 +130,6 @@ public class GameController : MonoBehaviour
                 AudioManager.Instance.PlaySE("brushing");
                 MakeHair(currentPosition);
             }
-            Debug.Log("score: "+ ScoreManager.instance.score);
-
             pastPosition = camera.ViewportToWorldPoint(currentPosition);
         }
 
