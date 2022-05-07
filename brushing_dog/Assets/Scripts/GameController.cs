@@ -87,8 +87,6 @@ public class GameController : MonoBehaviour
                 return;
             }
 
-            // TODO：スワイプした時の処理を書く
-            // 毛を発生させるとか？
             ScoreManager.instance.score += (Vector3.Distance(currentPosition, pastPosition)/10000.0f);
 
             // 一定のスコアごとに抜け毛を発生させる
