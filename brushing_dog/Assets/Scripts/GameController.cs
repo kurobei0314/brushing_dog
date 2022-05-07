@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using NCMB;
 
 public class GameController : MonoBehaviour
 {
@@ -22,9 +23,6 @@ public class GameController : MonoBehaviour
     private Camera camera;
 
     [SerializeField]
-    float GameTimes;
-
-    [SerializeField]
     Text timeText;
 
     [SerializeField]
@@ -42,21 +40,45 @@ public class GameController : MonoBehaviour
     [SerializeField]
     GameObject[] hair_block;
 
-    float start_game_counter = 4.0f;
+    [SerializeField]
+    GameObject tweetButton;
 
+    [SerializeField]
+    GameObject rankingButton;
+
+    [SerializeField]
+    GameObject replayButton;
+
+    float GameTimes;
+    float start_game_counter;
     int ResultFlg;
 
     // Start is called before the first frame update
     void Start()
     {
         SetCurrentGameState(GameState.COUNTDOWN);
+        InstantiateGame();
+    }
+
+    void InstantiateGame(){
         ScoreManager.instance.score = 0.0f;
         ResultText.SetActive(false);
         for (int i=0; i<3;i++){
             hair_block[i].SetActive(false);
         }
+        GameTimes = GameInfo.GAMETIMES;
         ResultFlg = 0;
+        start_game_counter = GameInfo.START_GAME_COUNTER;
         startTime.SetActive(true);
+        tweetButton.SetActive(false);
+        rankingButton.SetActive(false);
+        replayButton.SetActive(false);
+        tweetButton.GetComponent<Button>().onClick.AddListener (TweetButtonClick);
+        rankingButton.GetComponent<Button>().onClick.AddListener (RankingButtonClick);
+        replayButton.GetComponent<Button>().onClick.AddListener (ReplayButtonClick);
+        Vector3 result_pos = result_background.transform.position;
+        result_pos = new Vector3 (-19.18f, 0.0f, 0.0f);
+        result_background.transform.position = result_pos;
     }
 
     // Update is called once per frame
@@ -146,13 +168,6 @@ public class GameController : MonoBehaviour
         //時間を表示する
         timeText.text = ((int)GameTimes).ToString();
 
-        //3秒前の音
-        // if( 0 < GameTimes && GameTimes < 4){
-        //     if ((int)GameTimes <= 3 && 3 < (int)GameTimes+1){
-        //         AudioManager.Instance.PlaySE("Count");
-        //     }
-        // }
-
         if(GameTimes < 0){
             SetCurrentGameState(GameState.GAMEOVER);
             AudioManager.Instance.StopBGM();
@@ -204,7 +219,11 @@ public class GameController : MonoBehaviour
         AudioManager.Instance.PlayBGM("GameOver");
         Text TextContent = ResultText.GetComponent<Text>();
         TextContent.text = (int)ScoreManager.instance.score + "mg \n取れました";
+
         ResultText.SetActive(true);
+        tweetButton.SetActive(true);
+        rankingButton.SetActive(true);
+        replayButton.SetActive(true);
     }
 
     void DisplayHairBlock(){
@@ -240,6 +259,18 @@ public class GameController : MonoBehaviour
             startTimeText.text = ((int)start_game_counter).ToString();
             // AudioManager.Instance.PlaySE("Count");
         }
-        
+    }
+
+    void TweetButtonClick(){
+        naichilab.UnityRoomTweet.Tweet ("brushing_dog", " <換毛期> "+(int)ScoreManager.instance.score+"mgの抜け毛が取れたよ", "unityroom", "unity1week");
+    }
+
+    void RankingButtonClick(){
+        naichilab.RankingLoader.Instance.SendScoreAndShowRanking ((int)ScoreManager.instance.score);
+    }
+
+    void ReplayButtonClick(){
+        SetCurrentGameState(GameState.COUNTDOWN);
+        InstantiateGame();
     }
 }
