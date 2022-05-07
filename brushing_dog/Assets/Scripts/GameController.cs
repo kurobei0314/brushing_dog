@@ -42,6 +42,8 @@ public class GameController : MonoBehaviour
     [SerializeField]
     GameObject[] hair_block;
 
+    float start_game_counter = 4.0f;
+
     int ResultFlg;
 
     // Start is called before the first frame update
@@ -54,6 +56,7 @@ public class GameController : MonoBehaviour
             hair_block[i].SetActive(false);
         }
         ResultFlg = 0;
+        startTime.SetActive(true);
     }
 
     // Update is called once per frame
@@ -225,23 +228,18 @@ public class GameController : MonoBehaviour
 
     void StartGameCounter(){
 
-        float start_game_counter = 5.0f;
-        startTime.SetActive(true);
-
-        while (true){
-            if(0 >= start_game_counter){
-                break;
-            }
-            else {
-                //時間をカウントする
-                start_game_counter = TimeCounter(start_game_counter);
-                //時間を表示する
-                Text startTimeText = startTime.GetComponent<Text>();
-                startTimeText.text = ((int)start_game_counter).ToString();
-                AudioManager.Instance.PlaySE("Count");
-            }
+        if(1.0f > start_game_counter){
+            SetCurrentGameState(GameState.MAIN);
+            startTime.SetActive(false);        
         }
-        SetCurrentGameState(GameState.MAIN);
-        startTime.SetActive(false);
+        else {
+            //時間をカウントする
+            start_game_counter = TimeCounter(start_game_counter);
+            //時間を表示する
+            Text startTimeText = startTime.GetComponent<Text>();
+            startTimeText.text = ((int)start_game_counter).ToString();
+            // AudioManager.Instance.PlaySE("Count");
+        }
+        
     }
 }
