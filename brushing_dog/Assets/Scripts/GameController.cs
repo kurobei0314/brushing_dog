@@ -38,24 +38,32 @@ public class GameController : MonoBehaviour
     [SerializeField]
     GameObject[] hair_block;
 
+    int ResultFlg;
+
     // Start is called before the first frame update
     void Start()
     {
-        SetCurrentGameState(GameState.MAIN);
+        SetCurrentGameState(GameState.COUNTDOWN);
         ScoreManager.instance.score = 0.0f;
         ResultText.SetActive(false);
         for (int i=0; i<3;i++){
             hair_block[i].SetActive(false);
         }
+        ResultFlg = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(currentGameState == GameState.MAIN){
+        if(currentGameState == GameState.COUNTDOWN){
+            AudioManager.Instance.PlayBGM("Main");
+            SetCurrentGameState(GameState.MAIN);
+        }
+        else if(currentGameState == GameState.MAIN){
             PlayerControll();
             GameTimeCounter();
             DisplayHairBlock();
+            PlayDogSE();
         }
         else if (currentGameState == GameState.GAMEOVER){
             ResultControll();
@@ -86,12 +94,13 @@ public class GameController : MonoBehaviour
                 pastPosition = camera.ViewportToWorldPoint(currentPosition);
                 return;
             }
-
+            
             ScoreManager.instance.score += (Vector3.Distance(currentPosition, pastPosition)/10000.0f);
 
             // 一定のスコアごとに抜け毛を発生させる
             if((int)ScoreManager.instance.score % 10 == 0){
                 MakeHair(currentPosition);
+                AudioManager.Instance.PlaySE("brushing");
             }
             Debug.Log("score: "+ ScoreManager.instance.score);
 
@@ -134,7 +143,10 @@ public class GameController : MonoBehaviour
             }
         }
 
-        if(GameTimes < 0) SetCurrentGameState(GameState.GAMEOVER);
+        if(GameTimes < 0){
+            SetCurrentGameState(GameState.GAMEOVER);
+            AudioManager.Instance.StopBGM();
+        } 
     }
 
     void SetCurrentGameState(GameState status){
@@ -159,17 +171,20 @@ public class GameController : MonoBehaviour
     }
 
     void ResultControll(){
-
-        StartCoroutine("ResultAnimation");
+        if(ResultFlg == 0){
+            StartCoroutine("ResultAnimation");
+            ResultFlg = 1;
+        }
     }
 
     private IEnumerator ResultAnimation() {
-
+        AudioManager.Instance.PlaySE("StartGameOver");
         result_background.transform.DOMove (
             new Vector3(0.0f, 0.0f, 1.0f), //移動後の座標
             0.5f         //時間
         );
-        yield return new WaitForSeconds (0.6f);
+        yield return new WaitForSeconds (1.0f);
+        AudioManager.Instance.PlayBGM("GameOver");
         Text TextContent = ResultText.GetComponent<Text>();
         TextContent.text = (int)ScoreManager.instance.score + "mg \n取れました";
         ResultText.SetActive(true);
@@ -187,5 +202,10 @@ public class GameController : MonoBehaviour
             hair_block[0].SetActive(true);
         }
 
+    }
+    void PlayDogSE(){
+        if(Random.Range (0.0f, 1.0f) < 0.002f){
+            AudioManager.Instance.PlaySE("dog1b");
+        }
     }
 }

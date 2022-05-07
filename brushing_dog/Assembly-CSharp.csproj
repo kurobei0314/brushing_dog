@@ -42,6 +42,7 @@
      <Compile Include="Assets/Scripts/ScoreManager.cs" />
      <Compile Include="Assets/Scripts/brush.cs" />
      <Compile Include="Assets/Scripts/hair.cs" />
+     <Compile Include="Assets/Scripts/AudioManager.cs" />
     <Reference Include="UnityEngine">
         <HintPath>/Applications/Unity/Hub/Editor/2020.3.28f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
