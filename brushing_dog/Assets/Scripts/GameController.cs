@@ -42,9 +42,19 @@ public class GameController : MonoBehaviour
     [SerializeField]
     GameObject[] hair_block;
 
+    [SerializeField]
     float start_game_counter = 4.0f;
 
     int ResultFlg;
+
+    [SerializeField]
+    GameObject tweetButton;
+
+    [SerializeField]
+    GameObject rankingButton;
+
+    [SerializeField]
+    GameObject replayButton;
 
     // Start is called before the first frame update
     void Start()
@@ -57,6 +67,12 @@ public class GameController : MonoBehaviour
         }
         ResultFlg = 0;
         startTime.SetActive(true);
+        tweetButton.SetActive(false);
+        rankingButton.SetActive(false);
+        replayButton.SetActive(false);
+        tweetButton.GetComponent<Button>().onClick.AddListener (TweetButtonClick);
+        rankingButton.GetComponent<Button>().onClick.AddListener (RankingButtonClick);
+        replayButton.GetComponent<Button>().onClick.AddListener (ReplayButtonClick);
     }
 
     // Update is called once per frame
@@ -146,13 +162,6 @@ public class GameController : MonoBehaviour
         //時間を表示する
         timeText.text = ((int)GameTimes).ToString();
 
-        //3秒前の音
-        // if( 0 < GameTimes && GameTimes < 4){
-        //     if ((int)GameTimes <= 3 && 3 < (int)GameTimes+1){
-        //         AudioManager.Instance.PlaySE("Count");
-        //     }
-        // }
-
         if(GameTimes < 0){
             SetCurrentGameState(GameState.GAMEOVER);
             AudioManager.Instance.StopBGM();
@@ -204,7 +213,11 @@ public class GameController : MonoBehaviour
         AudioManager.Instance.PlayBGM("GameOver");
         Text TextContent = ResultText.GetComponent<Text>();
         TextContent.text = (int)ScoreManager.instance.score + "mg \n取れました";
+
         ResultText.SetActive(true);
+        tweetButton.SetActive(true);
+        rankingButton.SetActive(true);
+        replayButton.SetActive(true);
     }
 
     void DisplayHairBlock(){
@@ -240,6 +253,17 @@ public class GameController : MonoBehaviour
             startTimeText.text = ((int)start_game_counter).ToString();
             // AudioManager.Instance.PlaySE("Count");
         }
-        
+    }
+
+    void TweetButtonClick(){
+
+    }
+
+    void RankingButtonClick(){
+
+    }
+
+    void ReplayButtonClick(){
+
     }
 }
