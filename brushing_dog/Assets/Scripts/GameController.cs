@@ -99,8 +99,8 @@ public class GameController : MonoBehaviour
 
             // 一定のスコアごとに抜け毛を発生させる
             if((int)ScoreManager.instance.score % 10 == 0){
-                MakeHair(currentPosition);
                 AudioManager.Instance.PlaySE("brushing");
+                MakeHair(currentPosition);
             }
             Debug.Log("score: "+ ScoreManager.instance.score);
 
@@ -160,13 +160,20 @@ public class GameController : MonoBehaviour
 
     void MakeHair(Vector3 mouse_position){
 
-        if(Random.Range (0.0f, 1.0f) < 0.5f){
+        float random = Random.Range (0.0f, 1.0f);
+
+        if(random < 0.4f){
             GameObject tmp = Instantiate(hair[0], camera.ScreenToWorldPoint(mouse_position), Quaternion.identity);
             tmp.transform.Rotate(new Vector3 (0.0f,0.0f,Random.Range (0.0f, 360.0f)));
         }
-        else{
+        else if(random < 0.8f){
             GameObject tmp = Instantiate(hair[1], camera.ScreenToWorldPoint(mouse_position), Quaternion.identity);
             tmp.transform.Rotate(new Vector3 (0.0f,0.0f,Random.Range (0.0f, 360.0f)));
+        }
+        else{
+            GameObject tmp = Instantiate(hair[2], camera.ScreenToWorldPoint(mouse_position), Quaternion.identity);
+            tmp.transform.Rotate(new Vector3 (0.0f,0.0f,Random.Range (0.0f, 360.0f)));
+            AudioManager.Instance.PlaySE("spon2");
         }
     }
 
