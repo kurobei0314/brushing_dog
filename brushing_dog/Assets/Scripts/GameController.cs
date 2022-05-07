@@ -35,12 +35,18 @@ public class GameController : MonoBehaviour
     [SerializeField]
     GameObject ResultText;
 
+    [SerializeField]
+    GameObject[] hair_block;
+
     // Start is called before the first frame update
     void Start()
     {
         SetCurrentGameState(GameState.MAIN);
         ScoreManager.instance.score = 0.0f;
         ResultText.SetActive(false);
+        for (int i=0; i<3;i++){
+            hair_block[i].SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -49,6 +55,7 @@ public class GameController : MonoBehaviour
         if(currentGameState == GameState.MAIN){
             PlayerControll();
             GameTimeCounter();
+            DisplayHairBlock();
         }
         else if (currentGameState == GameState.GAMEOVER){
             ResultControll();
@@ -82,7 +89,7 @@ public class GameController : MonoBehaviour
 
             // TODO：スワイプした時の処理を書く
             // 毛を発生させるとか？
-            ScoreManager.instance.score = (Vector3.Distance(currentPosition, pastPosition)/100.0f);
+            ScoreManager.instance.score += (Vector3.Distance(currentPosition, pastPosition)/10000.0f);
 
             // 一定のスコアごとに抜け毛を発生させる
             if((int)ScoreManager.instance.score % 10 == 0){
@@ -168,5 +175,19 @@ public class GameController : MonoBehaviour
         Text TextContent = ResultText.GetComponent<Text>();
         TextContent.text = (int)ScoreManager.instance.score + "mg \n取れました";
         ResultText.SetActive(true);
+    }
+
+    void DisplayHairBlock(){
+
+        if(ScoreManager.instance.score > 1000){
+            hair_block[2].SetActive(true);
+        }
+        else if(ScoreManager.instance.score > 500){
+            hair_block[1].SetActive(true);
+        } 
+        else if(ScoreManager.instance.score > 100){
+            hair_block[0].SetActive(true);
+        }
+
     }
 }
