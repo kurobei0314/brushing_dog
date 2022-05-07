@@ -23,9 +23,6 @@ public class GameController : MonoBehaviour
     private Camera camera;
 
     [SerializeField]
-    float GameTimes;
-
-    [SerializeField]
     Text timeText;
 
     [SerializeField]
@@ -44,11 +41,6 @@ public class GameController : MonoBehaviour
     GameObject[] hair_block;
 
     [SerializeField]
-    float start_game_counter = 4.0f;
-
-    int ResultFlg;
-
-    [SerializeField]
     GameObject tweetButton;
 
     [SerializeField]
@@ -57,16 +49,26 @@ public class GameController : MonoBehaviour
     [SerializeField]
     GameObject replayButton;
 
+    float GameTimes;
+    float start_game_counter;
+    int ResultFlg;
+
     // Start is called before the first frame update
     void Start()
     {
         SetCurrentGameState(GameState.COUNTDOWN);
+        InstantiateGame();
+    }
+
+    void InstantiateGame(){
         ScoreManager.instance.score = 0.0f;
         ResultText.SetActive(false);
         for (int i=0; i<3;i++){
             hair_block[i].SetActive(false);
         }
+        GameTimes = GameInfo.GAMETIMES;
         ResultFlg = 0;
+        start_game_counter = GameInfo.START_GAME_COUNTER;
         startTime.SetActive(true);
         tweetButton.SetActive(false);
         rankingButton.SetActive(false);
@@ -74,6 +76,9 @@ public class GameController : MonoBehaviour
         tweetButton.GetComponent<Button>().onClick.AddListener (TweetButtonClick);
         rankingButton.GetComponent<Button>().onClick.AddListener (RankingButtonClick);
         replayButton.GetComponent<Button>().onClick.AddListener (ReplayButtonClick);
+        Vector3 result_pos = result_background.transform.position;
+        result_pos = new Vector3 (-19.18f, 0.0f, 0.0f);
+        result_background.transform.position = result_pos;
     }
 
     // Update is called once per frame
@@ -265,6 +270,7 @@ public class GameController : MonoBehaviour
     }
 
     void ReplayButtonClick(){
-
+        SetCurrentGameState(GameState.COUNTDOWN);
+        InstantiateGame();
     }
 }
