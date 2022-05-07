@@ -218,7 +218,7 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds (1.0f);
         AudioManager.Instance.PlayBGM("GameOver");
         Text TextContent = ResultText.GetComponent<Text>();
-        TextContent.text = (int)ScoreManager.instance.score + "mg \n取れました";
+        TextContent.text = (int)ScoreManager.instance.score + "mg \nとれました";
 
         ResultText.SetActive(true);
         tweetButton.SetActive(true);
