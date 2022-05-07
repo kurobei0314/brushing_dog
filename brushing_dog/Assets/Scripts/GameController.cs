@@ -256,11 +256,11 @@ public class GameController : MonoBehaviour
     }
 
     void TweetButtonClick(){
-
+        naichilab.UnityRoomTweet.Tweet ("brushing_dog", " <換毛期> "+(int)ScoreManager.instance.score+"mgの抜け毛が取れたよ", "unityroom", "unity1week");
     }
 
     void RankingButtonClick(){
-
+        
     }
 
     void ReplayButtonClick(){

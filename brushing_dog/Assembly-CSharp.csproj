@@ -43,6 +43,14 @@
      <Compile Include="Assets/Scripts/brush.cs" />
      <Compile Include="Assets/Scripts/hair.cs" />
      <Compile Include="Assets/Scripts/AudioManager.cs" />
+     <Compile Include="Assets/naichilab/unityroom-tweet/Scripts/Internal/CoroutineHandler.cs" />
+     <Compile Include="Assets/naichilab/unityroom-tweet/Scripts/Internal/GyazoResponse.cs" />
+     <Compile Include="Assets/naichilab/unityroom-tweet/Scripts/Internal/GyazoSetting.cs" />
+     <Compile Include="Assets/naichilab/unityroom-tweet/Scripts/Internal/GyazoUploader.cs" />
+     <Compile Include="Assets/naichilab/unityroom-tweet/Sample/Scripts/TweetSample.cs" />
+     <Compile Include="Assets/naichilab/unityroom-tweet/Scripts/UnityRoomTweet.cs" />
+     <Compile Include="Assets/naichilab/unityroom-tweet/Scripts/Internal/TweetData.cs" />
+     <Compile Include="Assets/naichilab/unityroom-tweet/Scripts/Internal/ITweetData.cs" />
     <Reference Include="UnityEngine">
         <HintPath>/Applications/Unity/Hub/Editor/2020.3.28f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
