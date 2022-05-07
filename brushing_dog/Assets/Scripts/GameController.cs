@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
 
      //ゲームの状態を管理する
     public enum GameState{
+        START,
         COUNTDOWN,
         MAIN,
         GAMEOVER
@@ -25,6 +26,9 @@ public class GameController : MonoBehaviour
 
     [SerializeField]
     Text timeText;
+
+    [SerializeField]
+    GameObject startTime;
 
     [SerializeField]
     GameObject[] hair;
@@ -55,9 +59,12 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // if (currentGameState == GameState.START){
+        //     SetCurrentGameState(GameState.COUNTDOWN);
+        // }
         if(currentGameState == GameState.COUNTDOWN){
             AudioManager.Instance.PlayBGM("Main");
-            SetCurrentGameState(GameState.MAIN);
+            StartGameCounter();
         }
         else if(currentGameState == GameState.MAIN){
             PlayerControll();
@@ -137,11 +144,11 @@ public class GameController : MonoBehaviour
         timeText.text = ((int)GameTimes).ToString();
 
         //3秒前の音
-        if( 0 < GameTimes && GameTimes < 4){
-            if ((int)GameTimes <= 3 && 3 < (int)GameTimes+1){
-                // AudioManager.Instance.PlaySE("Count");
-            }
-        }
+        // if( 0 < GameTimes && GameTimes < 4){
+        //     if ((int)GameTimes <= 3 && 3 < (int)GameTimes+1){
+        //         AudioManager.Instance.PlaySE("Count");
+        //     }
+        // }
 
         if(GameTimes < 0){
             SetCurrentGameState(GameState.GAMEOVER);
@@ -214,5 +221,27 @@ public class GameController : MonoBehaviour
         if(Random.Range (0.0f, 1.0f) < 0.002f){
             AudioManager.Instance.PlaySE("dog1b");
         }
+    }
+
+    void StartGameCounter(){
+
+        float start_game_counter = 5.0f;
+        startTime.SetActive(true);
+
+        while (true){
+            if(0 >= start_game_counter){
+                break;
+            }
+            else {
+                //時間をカウントする
+                start_game_counter = TimeCounter(start_game_counter);
+                //時間を表示する
+                Text startTimeText = startTime.GetComponent<Text>();
+                startTimeText.text = ((int)start_game_counter).ToString();
+                AudioManager.Instance.PlaySE("Count");
+            }
+        }
+        SetCurrentGameState(GameState.MAIN);
+        startTime.SetActive(false);
     }
 }
