@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using NCMB;
 
 public class GameController : MonoBehaviour
 {
@@ -260,7 +261,7 @@ public class GameController : MonoBehaviour
     }
 
     void RankingButtonClick(){
-        
+        naichilab.RankingLoader.Instance.SendScoreAndShowRanking ((int)ScoreManager.instance.score);
     }
 
     void ReplayButtonClick(){
