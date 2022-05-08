@@ -10,7 +10,6 @@ public class GameController : MonoBehaviour
 
      //ゲームの状態を管理する
     public enum GameState{
-        START,
         COUNTDOWN,
         MAIN,
         GAMEOVER
@@ -84,9 +83,6 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if (currentGameState == GameState.START){
-        //     SetCurrentGameState(GameState.COUNTDOWN);
-        // }
         if(currentGameState == GameState.COUNTDOWN){
             AudioManager.Instance.PlayBGM("Main");
             StartGameCounter();
@@ -134,8 +130,6 @@ public class GameController : MonoBehaviour
                 AudioManager.Instance.PlaySE("brushing");
                 MakeHair(currentPosition);
             }
-            Debug.Log("score: "+ ScoreManager.instance.score);
-
             pastPosition = camera.ViewportToWorldPoint(currentPosition);
         }
 
@@ -228,13 +222,13 @@ public class GameController : MonoBehaviour
 
     void DisplayHairBlock(){
 
-        if(ScoreManager.instance.score > 1000){
+        if(ScoreManager.instance.score > 2000){
             hair_block[2].SetActive(true);
         }
-        else if(ScoreManager.instance.score > 500){
+        else if(ScoreManager.instance.score > 1500){
             hair_block[1].SetActive(true);
         } 
-        else if(ScoreManager.instance.score > 100){
+        else if(ScoreManager.instance.score > 1000){
             hair_block[0].SetActive(true);
         }
 
