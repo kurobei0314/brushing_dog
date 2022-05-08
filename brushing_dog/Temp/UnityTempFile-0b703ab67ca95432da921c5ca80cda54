@@ -390,6 +390,7 @@
 "Assets/Scripts/Constant.cs"
 "Assets/Scripts/GameController.cs"
 "Assets/Scripts/ScoreManager.cs"
+"Assets/Scripts/StartController.cs"
 "Assets/Scripts/brush.cs"
 "Assets/Scripts/dog.cs"
 "Assets/Scripts/hair.cs"

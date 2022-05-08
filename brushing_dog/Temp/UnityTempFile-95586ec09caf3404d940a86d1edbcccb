@@ -5,7 +5,7 @@
 /refout:"Temp/Assembly-CSharp.dll.ref"
 /deterministic
 /debug:portable
-/optimize-
+/optimize+
 /nostdlib+
 /preferreduilang:en-US
 /langversion:8.0
@@ -390,6 +390,7 @@
 "Assets/Scripts/Constant.cs"
 "Assets/Scripts/GameController.cs"
 "Assets/Scripts/ScoreManager.cs"
+"Assets/Scripts/StartController.cs"
 "Assets/Scripts/brush.cs"
 "Assets/Scripts/dog.cs"
 "Assets/Scripts/hair.cs"

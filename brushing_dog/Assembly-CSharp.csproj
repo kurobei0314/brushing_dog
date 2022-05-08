@@ -85,6 +85,7 @@
      <Compile Include="Assets/NCMB/Script/NamespaceDoc.cs" />
      <Compile Include="Assets/naichilab/unityroom-tweet/Scripts/UnityRoomTweet.cs" />
      <Compile Include="Assets/NCMB/Script/NCMBConnection.cs" />
+     <Compile Include="Assets/Scripts/StartController.cs" />
      <Compile Include="Assets/NCMB/Script/Task/NCMBScriptTaskExtension.cs" />
      <Compile Include="Assets/NCMB/Script/NCMBClassNameAttribute.cs" />
      <Compile Include="Assets/naichilab/unity-simple-ranking/Scripts/RankingInfo.cs" />
