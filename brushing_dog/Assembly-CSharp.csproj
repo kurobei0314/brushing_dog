@@ -85,6 +85,7 @@
      <Compile Include="Assets/NCMB/Script/NamespaceDoc.cs" />
      <Compile Include="Assets/naichilab/unityroom-tweet/Scripts/UnityRoomTweet.cs" />
      <Compile Include="Assets/NCMB/Script/NCMBConnection.cs" />
+     <Compile Include="Assets/Scripts/StartController.cs" />
      <Compile Include="Assets/NCMB/Script/Task/NCMBScriptTaskExtension.cs" />
      <Compile Include="Assets/NCMB/Script/NCMBClassNameAttribute.cs" />
      <Compile Include="Assets/naichilab/unity-simple-ranking/Scripts/RankingInfo.cs" />
@@ -112,7 +113,6 @@
      <Compile Include="Assets/Scripts/brush.cs" />
      <Compile Include="Assets/naichilab/unityroom-tweet/Scripts/Internal/GyazoResponse.cs" />
      <Compile Include="Assets/Scripts/AudioManager.cs" />
-     <Compile Include="Assets/Scripts/StartController.cs" />
     <Reference Include="UnityEngine">
         <HintPath>/Applications/Unity/Hub/Editor/2020.3.28f1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
